@@ -34,12 +34,15 @@ public class PlayerController : MonoBehaviour
 
         _rb.linearVelocityX = _movement.x * _movementSpeed;
 
+        // flips spritesssss
+        if (_movement.x > 0)
+            _rndr.flipX = false;
+        else if (_movement.x < 0)
+            _rndr.flipX = true;
+
         if (IsGrounded())
         {
-            if (_movement.x > 0)
-                _rndr.flipX = false;
-            else if (_movement.x < 0)
-                _rndr.flipX = true;
+            // moved the sprite flipping to up
 
             _currentJumpCount = _jumpCount - 1;
         }
