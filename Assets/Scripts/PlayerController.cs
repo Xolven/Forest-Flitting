@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +16,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _anim;
 
+    private Transform self_transform;
+
     private Vector2 _movement;
     private uint _currentJumpCount;
 
@@ -25,6 +28,7 @@ public class PlayerController : MonoBehaviour
         _rndr = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        self_transform = GetComponent<Transform>();
     }
 
     private void Update()
@@ -44,7 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             // moved the sprite flipping to up
 
-            _currentJumpCount = _jumpCount - 1;
+            _currentJumpCount = _jumpCount;
         }
     }
 
@@ -53,17 +57,21 @@ public class PlayerController : MonoBehaviour
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
+        
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount == 0)
+        if (!ctx.performed || _currentJumpCount <= 0)
+        {
             return;
-
+        }
         _rb.linearVelocityY = _jumpForce;
         _anim.SetTrigger("Jump");
 
         --_currentJumpCount;
+
+        self_transform.position += new Vector3(0,0.1f,0); //move a bit up to prevent accidental jump refresh
     }
 
     private void OnDrawGizmos()
