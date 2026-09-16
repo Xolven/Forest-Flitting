@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private Animator _anim;
 
     private Transform self_transform;
+    private Boolean did_first_jump = false;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -49,6 +50,7 @@ public class PlayerController : MonoBehaviour
             // moved the sprite flipping to up
 
             _currentJumpCount = _jumpCount;
+            did_first_jump = false;
         }
     }
 
@@ -62,16 +64,18 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0)
+        if (!ctx.performed || _currentJumpCount <= 0 || (!did_first_jump && !IsGrounded()))
         {
             return;
         }
+        did_first_jump = true;
+
         _rb.linearVelocityY = _jumpForce;
         _anim.SetTrigger("Jump");
 
         --_currentJumpCount;
 
-        self_transform.position += new Vector3(0,0.1f,0); //move a bit up to prevent accidental jump refresh
+        self_transform.position += new Vector3(0,0.1f,0); //move a bit up to prevent accidental jump refresh on next update
     }
 
     private void OnDrawGizmos()
