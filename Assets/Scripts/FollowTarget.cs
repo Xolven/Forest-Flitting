@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FollowTarget : MonoBehaviour
 {
+    // Follows exact position, need to add deadzone behavior
+
     [SerializeField] private Transform target_transform;
     private Transform self_transform;
 
