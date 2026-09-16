@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private Transform self_transform;
     private Boolean did_first_jump = false;
+    private Boolean can_first_jump = false;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -51,6 +52,7 @@ public class PlayerController : MonoBehaviour
 
             _currentJumpCount = _jumpCount;
             did_first_jump = false;
+            can_first_jump = true;
         }
     }
 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0 || (!did_first_jump && !IsGrounded()))
+        if (!ctx.performed || _currentJumpCount <= 0 || (!did_first_jump && !can_first_jump))
         {
             return;
         }
