@@ -1,7 +1,9 @@
 using System;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Rigidbody2D))]
@@ -24,8 +26,8 @@ public class PlayerController : MonoBehaviour
     private Transform selfTransform;
     private bool canJump = false;
     private float timeWhenLastOnGround = 0f;
-    
-    
+
+    public Vector3 respawnLocation;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -38,6 +40,8 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         selfTransform = GetComponent<Transform>();
+
+        respawnLocation = selfTransform.position;
     }
 
     private void Update()
@@ -98,6 +102,9 @@ public class PlayerController : MonoBehaviour
         _anim.enabled = false;
         _rndr.enabled = false;
         _rb.simulated = false;
+
+        selfTransform.position = respawnLocation;
+        Activate();
     }
 
     public void Activate()
@@ -120,6 +127,9 @@ public class PlayerController : MonoBehaviour
         if (physicsMat == deathPhyMat)
         {
             Deactivate();
+        } else if (physicsMat == checkpointPhyMat)
+        {
+            respawnLocation = collision.GetComponent<Transform>().position;
         }
     }
 }
