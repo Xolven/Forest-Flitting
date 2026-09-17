@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -102,8 +103,13 @@ public class PlayerController : MonoBehaviour
         _rb.simulated = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        PhysicsMaterial2D fam = collision.sharedMaterial;
+        if (!fam)
+        {
+            Debug.LogWarning("no phmat2d D:");
+            return;
+        }
     }
 }

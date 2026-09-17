@@ -284,11 +284,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.3
+      value: 13.01
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 20.84
+      value: 2.85
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -326,10 +326,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7056747478428582462, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2013329973}
   m_SourcePrefab: {fileID: 100100000, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
 --- !u!1 &171691859
 GameObject:
@@ -481,7 +488,7 @@ GameObject:
   - component: {fileID: 261047949}
   - component: {fileID: 261047948}
   - component: {fileID: 261047947}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Checkpoint Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1349,7 +1356,7 @@ Transform:
   m_GameObject: {fileID: 942678300}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 39.87794, y: -7.47145, z: 0}
+  m_LocalPosition: {x: 46.47, y: -7.53, z: 0}
   m_LocalScale: {x: 3.409, y: 3.661, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1633,6 +1640,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
+--- !u!1 &1186238957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7056747478428582462, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+  m_PrefabInstance: {fileID: 109620645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1263650382
 GameObject:
   m_ObjectHideFlags: 0
@@ -1777,6 +1789,18 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
   m_PrefabInstance: {fileID: 109620645}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2013329973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1186238957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73f55a757902e9149bc6e9926c8582fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
