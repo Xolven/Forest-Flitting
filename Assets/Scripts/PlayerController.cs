@@ -16,9 +16,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _anim;
 
-    private Transform self_transform;
-    private Boolean did_first_jump = false;
-    private Boolean can_first_jump = false;
+    private Transform selfTransform;
+    private Boolean didFirstJump = false;
+    private Boolean canFirstJump = false;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
         _rndr = GetComponent<SpriteRenderer>();
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
-        self_transform = GetComponent<Transform>();
+        selfTransform = GetComponent<Transform>();
     }
 
     private void Update()
@@ -48,11 +48,7 @@ public class PlayerController : MonoBehaviour
 
         if (IsGrounded())
         {
-            // moved the sprite flipping to up
-
             _currentJumpCount = _jumpCount;
-            did_first_jump = false;
-            can_first_jump = true;
         }
     }
 
@@ -66,18 +62,17 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0 || (!did_first_jump && !can_first_jump))
+        if (!ctx.performed || _currentJumpCount <= 0)
         {
             return;
         }
-        did_first_jump = true;
 
         _rb.linearVelocityY = _jumpForce;
         _anim.SetTrigger("Jump");
 
         --_currentJumpCount;
 
-        self_transform.position += new Vector3(0,0.1f,0); //move a bit up to prevent accidental jump refresh on next update
+        selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
     }
 
     private void OnDrawGizmos()

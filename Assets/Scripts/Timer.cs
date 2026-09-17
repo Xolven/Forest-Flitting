@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private bool is_running;
-    private float start_time;
-    private float timer_duration;
+    private bool isRunning;
+    private float startTime;
+    [SerializeField] private float timerDuration;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
