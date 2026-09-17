@@ -65,7 +65,6 @@ public class PlayerController : MonoBehaviour
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
-        
     }
 
     public void Jump(InputAction.CallbackContext ctx)
@@ -86,5 +85,20 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - Vector3.up, new Vector2(0.9f, 0.1f));
+    }
+
+
+    public void Deactivate()
+    {
+        enabled = false;
+        _anim.enabled = false;
+        _rb.simulated = false;
+    }
+
+    public void Activate()
+    {
+        enabled = true;
+        _anim.enabled = true;
+        _rb.simulated = true;
     }
 }
