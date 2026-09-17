@@ -3,19 +3,27 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    private bool isRunning;
+    private bool isRunning = false;
     private float startTime;
-    [SerializeField] private float timerDuration;
+    [SerializeField] private float timerDuration = 10f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public event Action TimerFinish;
+
+    public void StartTimer()
     {
-        
+        startTime = Time.time;
+        isRunning = true;
     }
-
-    // Update is called once per frame
-    void Update()
+    public void StopTimer()
     {
-        
+        isRunning = false;
+    }
+    private void FixedUpdate()
+    {
+        if (isRunning && timerDuration <= Time.time - startTime)
+        {
+            TimerFinish.Invoke();
+            StopTimer();
+        }
     }
 }

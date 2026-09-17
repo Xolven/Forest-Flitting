@@ -16,9 +16,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D _rb;
     private Animator _anim;
 
+    private Timer coyoteTimer;
     private Transform selfTransform;
-    private Boolean didFirstJump = false;
-    private Boolean canFirstJump = false;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -31,7 +30,15 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         selfTransform = GetComponent<Transform>();
+        coyoteTimer = GetComponent<Timer>();
     }
+
+    private void Start()
+    {
+        coyoteTimer.TimerFinish += Placeholder;
+    }
+
+    private void Placeholder() { }
 
     private void Update()
     {
@@ -73,6 +80,7 @@ public class PlayerController : MonoBehaviour
         --_currentJumpCount;
 
         selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
+        coyoteTimer.StartTimer();
     }
 
     private void OnDrawGizmos()
