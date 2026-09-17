@@ -330,6 +330,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6504760264156632806, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7056747478428582462, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -500,7 +504,7 @@ GameObject:
   m_Layer: 0
   m_Name: Checkpoint Test
   m_TagString: Untagged
-  m_Icon: {fileID: -5487077368411116049, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
