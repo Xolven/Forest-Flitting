@@ -496,6 +496,7 @@ GameObject:
   - component: {fileID: 261047949}
   - component: {fileID: 261047948}
   - component: {fileID: 261047947}
+  - component: {fileID: 261047950}
   m_Layer: 0
   m_Name: Checkpoint Test
   m_TagString: Untagged
@@ -557,7 +558,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261047946}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -624,6 +625,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &261047950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261047946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459248f7d88e5ed429d093750ed35d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HideOnStart
 --- !u!1 &266798841
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1255,7 @@ GameObject:
   - component: {fileID: 942678303}
   - component: {fileID: 942678302}
   - component: {fileID: 942678301}
+  - component: {fileID: 942678304}
   m_Layer: 3
   m_Name: Death Test
   m_TagString: Untagged
@@ -1303,7 +1317,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 942678300}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1370,6 +1384,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &942678304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942678300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459248f7d88e5ed429d093750ed35d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &990714763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1803,6 +1829,7 @@ GameObject:
   - component: {fileID: 1358995846}
   - component: {fileID: 1358995845}
   - component: {fileID: 1358995844}
+  - component: {fileID: 1358995847}
   m_Layer: 3
   m_Name: Death Test (1)
   m_TagString: Untagged
@@ -1864,7 +1891,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1358995843}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -1931,6 +1958,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358995847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358995843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 459248f7d88e5ed429d093750ed35d15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HideOnStart
 --- !u!4 &2013329966 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
