@@ -101,4 +101,9 @@ public class PlayerController : MonoBehaviour
         _anim.enabled = true;
         _rb.simulated = true;
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+    }
 }
