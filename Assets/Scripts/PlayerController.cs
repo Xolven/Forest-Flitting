@@ -12,12 +12,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private uint _jumpCount;
     [SerializeField] private LayerMask _groundLayer;
 
+    [SerializeField] private float maxCoyoteTime = 1f;
+
     private SpriteRenderer _rndr;
     private Rigidbody2D _rb;
     private Animator _anim;
 
-    private Timer coyoteTimer;
     private Transform selfTransform;
+    private bool canJump = false;
+    private float timeWhenLastOnGround = 0f;
+    
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -30,15 +34,7 @@ public class PlayerController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
         selfTransform = GetComponent<Transform>();
-        coyoteTimer = GetComponent<Timer>();
     }
-
-    private void Start()
-    {
-        coyoteTimer.TimerFinish += Placeholder;
-    }
-
-    private void Placeholder() { }
 
     private void Update()
     {
@@ -56,6 +52,11 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded())
         {
             _currentJumpCount = _jumpCount;
+            canJump = true;
+            timeWhenLastOnGround = Time.time;
+        } else if (Time.time - timeWhenLastOnGround > maxCoyoteTime)
+        {
+            canJump = false;
         }
     }
 
@@ -69,7 +70,7 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0)
+        if (!ctx.performed || _currentJumpCount <= 0 || !canJump)
         {
             return;
         }
@@ -80,7 +81,6 @@ public class PlayerController : MonoBehaviour
         --_currentJumpCount;
 
         selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
-        coyoteTimer.StartTimer();
     }
 
     private void OnDrawGizmos()
