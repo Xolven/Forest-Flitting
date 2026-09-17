@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask _groundLayer;
 
     [SerializeField] private float maxCoyoteTime = 1f;
+    [SerializeField] private PhysicsMaterial2D checkpointPhyMat;
+    [SerializeField] private PhysicsMaterial2D deathPhyMat;
 
     private SpriteRenderer _rndr;
     private Rigidbody2D _rb;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour
     private Transform selfTransform;
     private bool canJump = false;
     private float timeWhenLastOnGround = 0f;
+    
     
 
     private Vector2 _movement;
@@ -93,6 +96,7 @@ public class PlayerController : MonoBehaviour
     {
         enabled = false;
         _anim.enabled = false;
+        _rndr.enabled = false;
         _rb.simulated = false;
     }
 
@@ -100,16 +104,22 @@ public class PlayerController : MonoBehaviour
     {
         enabled = true;
         _anim.enabled = true;
+        _rndr.enabled = true;
         _rb.simulated = true;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PhysicsMaterial2D fam = collision.sharedMaterial;
-        if (!fam)
+        PhysicsMaterial2D physicsMat = collision.sharedMaterial;
+        if (!physicsMat)
         {
             Debug.LogWarning("no phmat2d D:");
             return;
+        }
+        
+        if (physicsMat == deathPhyMat)
+        {
+            Deactivate();
         }
     }
 }

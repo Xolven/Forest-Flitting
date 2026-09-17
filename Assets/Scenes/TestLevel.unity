@@ -275,9 +275,17 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: deathPhyMat
+      value: 
+      objectReference: {fileID: 6200000, guid: b5d694951081cd141a6c444039a8762a, type: 2}
+    - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: maxCoyoteTime
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: checkpointPhyMat
+      value: 
+      objectReference: {fileID: 6200000, guid: 5e5c178f67fac944cb77c529d190ea09, type: 2}
     - target: {fileID: 3423692901627013850, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: timerDuration
       value: 1
