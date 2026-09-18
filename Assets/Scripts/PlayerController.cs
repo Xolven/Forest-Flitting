@@ -93,6 +93,8 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - Vector3.up, new Vector2(0.9f, 0.1f));
+        Gizmos.DrawWireCube(transform.position - new Vector3(0.5f,0.5f,0), new Vector2(0.1f, 0.9f));
+        Gizmos.DrawWireCube(transform.position - new Vector3(-0.5f, 0.5f, 0), new Vector2(0.1f, 0.9f));
     }
 
 
