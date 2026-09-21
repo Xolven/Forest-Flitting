@@ -27,12 +27,24 @@ public class PlayerController : MonoBehaviour
     private bool canJump = false;
     private float timeWhenLastOnGround = 0f;
 
+    private bool isStuckOnWall = false;
+
     public Vector3 respawnLocation;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
 
     private bool IsGrounded() => Physics2D.BoxCast(transform.position - Vector3.up, new Vector2(0.9f, 0.1f), 0, Vector2.zero, 100, _groundLayer);
+
+    private bool IsWallLeft() => Physics2D.BoxCast(transform.position - new Vector3(0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
+    private bool IsWallRight() => Physics2D.BoxCast(transform.position - new Vector3(-0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireCube(transform.position - Vector3.up, new Vector2(0.9f, 0.1f));
+        Gizmos.DrawWireCube(transform.position - new Vector3(0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f));
+        Gizmos.DrawWireCube(transform.position - new Vector3(-0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f));
+    }
 
     private void Awake()
     {
@@ -46,6 +58,15 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        //if (IsWallLeft())
+        //{
+        //    Debug.Log("Touch wall left");
+        //}
+        //if (IsWallRight())
+        //{
+        //    Debug.Log("Toucehd wall righ");
+        //}
+
         _anim.SetBool("IsGrounded", IsGrounded());
         _anim.SetFloat("YVelocity", _rb.linearVelocityY);
 
@@ -89,14 +110,6 @@ public class PlayerController : MonoBehaviour
 
         selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.DrawWireCube(transform.position - Vector3.up, new Vector2(0.9f, 0.1f));
-        Gizmos.DrawWireCube(transform.position - new Vector3(0.5f,0.5f,0), new Vector2(0.1f, 0.9f));
-        Gizmos.DrawWireCube(transform.position - new Vector3(-0.5f, 0.5f, 0), new Vector2(0.1f, 0.9f));
-    }
-
 
     public void Deactivate()
     {
