@@ -286,17 +286,21 @@ PrefabInstance:
       propertyPath: checkpointPhyMat
       value: 
       objectReference: {fileID: 6200000, guid: 5e5c178f67fac944cb77c529d190ea09, type: 2}
+    - target: {fileID: -6235407462510711444, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3423692901627013850, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: timerDuration
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.69
+      value: 1.38
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.32
+      value: -1.66
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.z
@@ -339,8 +343,28 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_Size.x
+      value: 1.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_Size.y
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 1.875
+      objectReference: {fileID: 0}
+    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 1.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
