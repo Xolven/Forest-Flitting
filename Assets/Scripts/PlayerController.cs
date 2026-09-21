@@ -1,6 +1,7 @@
 using System;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isStuckOnWall = false;
 
-    public Vector3 respawnLocation;
+    private Vector3 respawnLocation;
 
     private Vector2 _movement;
     private uint _currentJumpCount;
@@ -38,6 +39,13 @@ public class PlayerController : MonoBehaviour
 
     private bool IsWallLeft() => Physics2D.BoxCast(transform.position - new Vector3(0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
     private bool IsWallRight() => Physics2D.BoxCast(transform.position - new Vector3(-0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
+
+    private bool isStuckToWall = false;
+    private bool canStickToWall = false;
+
+    [SerializeField] private float defaultGravityScale = 3;
+    [SerializeField] private float wallStickRefreshDuration = 1f;
+    private float wallStickLeaveTime;
 
     private void OnDrawGizmos()
     {
@@ -73,19 +81,60 @@ public class PlayerController : MonoBehaviour
         _rb.linearVelocityX = _movement.x * _movementSpeed;
 
         // flips spritesssss
-        if (_movement.x > 0)
-            _rndr.flipX = false;
-        else if (_movement.x < 0)
-            _rndr.flipX = true;
+        //if (_movement.x > 0)
+        //    _rndr.flipX = false;
+        //else if (_movement.x < 0)
+        //    _rndr.flipX = true;
 
         if (IsGrounded())
         {
             _currentJumpCount = _jumpCount;
             canJump = true;
             timeWhenLastOnGround = Time.time;
-        } else if (Time.time - timeWhenLastOnGround > maxCoyoteTime)
+        } 
+        else if (Time.time - timeWhenLastOnGround > maxCoyoteTime)
         {
             canJump = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        CheckWallStick();
+    }
+
+    private void LeaveWall()
+    {
+        _rb.gravityScale = defaultGravityScale;
+        canStickToWall = false;
+        isStuckOnWall = false;
+        wallStickLeaveTime = Time.time;
+    }
+    private void StickToWall(int direction)
+    {
+        _rb.gravityScale = 0;
+        _currentJumpCount = _jumpCount;
+        isStuckOnWall = true;
+    }
+    private void CheckWallStick() // NEST HELL FIX LATER CLEAN AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    {
+        if (!isStuckOnWall)
+        {
+            if (!canStickToWall)
+            {
+                if (Time.time - wallStickLeaveTime > wallStickRefreshDuration)
+                {
+                    canStickToWall = true;
+                }
+            }
+            if (IsWallLeft())
+            {
+                StickToWall(1);
+            } 
+            else if (IsWallRight())
+            {
+                StickToWall(-1);
+            }
         }
     }
 
@@ -94,11 +143,16 @@ public class PlayerController : MonoBehaviour
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
+
+        if (isStuckOnWall)
+        {
+            LeaveWall();
+        }
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0 || !canJump)
+        if (!ctx.performed || _currentJumpCount <= 0 || (!canJump && !isStuckOnWall))
         {
             return;
         }
@@ -109,6 +163,10 @@ public class PlayerController : MonoBehaviour
         --_currentJumpCount;
 
         selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
+        if (isStuckOnWall)
+        {
+            LeaveWall();
+        }
     }
 
     public void Deactivate()
