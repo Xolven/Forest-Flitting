@@ -37,16 +37,17 @@ public class PlayerController : MonoBehaviour
 
     private bool IsGrounded() => Physics2D.BoxCast(transform.position - Vector3.up, new Vector2(0.9f, 0.1f), 0, Vector2.zero, 100, _groundLayer);
 
+    // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private bool IsWallLeft() => Physics2D.BoxCast(transform.position - new Vector3(0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
     private bool IsWallRight() => Physics2D.BoxCast(transform.position - new Vector3(-0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
 
     private bool isStuckToWall = false;
     private bool canStickToWall = false;
 
-    [SerializeField] private float defaultGravityScale = 3;
+    [SerializeField] private float defaultGravityScale = 3f;
     [SerializeField] private float wallStickRefreshDuration = 1f;
     private float wallStickLeaveTime;
-
+    // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(transform.position - Vector3.up, new Vector2(0.9f, 0.1f));
@@ -98,9 +99,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate()// WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     {
-        CheckWallStick();
+        //CheckWallStick();
     }
 
     private void LeaveWall()
@@ -116,43 +117,24 @@ public class PlayerController : MonoBehaviour
         _currentJumpCount = _jumpCount;
         isStuckOnWall = true;
     }
-    private void CheckWallStick() // NEST HELL FIX LATER CLEAN AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    private void CheckWallStick()
     {
-        if (!isStuckOnWall)
-        {
-            if (!canStickToWall)
-            {
-                if (Time.time - wallStickLeaveTime > wallStickRefreshDuration)
-                {
-                    canStickToWall = true;
-                }
-            }
-            if (IsWallLeft())
-            {
-                StickToWall(1);
-            } 
-            else if (IsWallRight())
-            {
-                StickToWall(-1);
-            }
-        }
+        /* Need to make jumpting have a "wall jump mode"
+         * AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+         * 
+         */
     }
-
+    // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     public void Move(InputAction.CallbackContext ctx)
     {
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
-
-        if (isStuckOnWall)
-        {
-            LeaveWall();
-        }
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0 || (!canJump && !isStuckOnWall))
+        if (!ctx.performed || _currentJumpCount <= 0 || (!canJump))
         {
             return;
         }
@@ -163,10 +145,6 @@ public class PlayerController : MonoBehaviour
         --_currentJumpCount;
 
         selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
-        if (isStuckOnWall)
-        {
-            LeaveWall();
-        }
     }
 
     public void Deactivate()
