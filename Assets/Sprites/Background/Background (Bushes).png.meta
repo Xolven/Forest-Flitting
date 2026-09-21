@@ -1,19 +1,10 @@
 fileFormatVersion: 2
-guid: a0820d4744930b54e8d0586f01f21a55
+guid: dc363594118270a4eb446d3b1ecaae5f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2752061707473322484
-    second: Slime Placeholder_0
-  - first:
-      213: -4367325216643254086
-    second: Slime Placeholder_1
-  - first:
-      213: -630180195512109380
-    second: Slime Placeholder_2
-  - first:
-      213: -5146762315063422251
-    second: Slime Placeholder_3
+      213: 3860442359429592641
+    second: Background (Bushes)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -60,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -135,57 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Slime Placeholder_0
+      name: Background (Bushes)_0
       rect:
         serializedVersion: 2
-        x: 1
-        y: 31
-        width: 30
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 4f107e9ba89413620800000000000000
-      internalID: 2752061707473322484
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime Placeholder_1
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 31
-        width: 30
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: ab87f53cad42463c0800000000000000
-      internalID: -4367325216643254086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime Placeholder_2
-      rect:
-        serializedVersion: 2
-        x: 1
+        x: 0
         y: 0
-        width: 30
-        height: 23
+        width: 512
+        height: 137
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -194,30 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cb6b30673762147f0800000000000000
-      internalID: -630180195512109380
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Slime Placeholder_3
-      rect:
-        serializedVersion: 2
-        x: 33
-        y: 0
-        width: 30
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 5d2174371f60398b0800000000000000
-      internalID: -5146762315063422251
+      spriteID: 146fba55fdb039530800000000000000
+      internalID: 3860442359429592641
       vertices: []
       indices: 
       edges: []
@@ -236,10 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Slime Placeholder_0: 2752061707473322484
-      Slime Placeholder_1: -4367325216643254086
-      Slime Placeholder_2: -630180195512109380
-      Slime Placeholder_3: -5146762315063422251
+      Background (Bushes)_0: 3860442359429592641
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
