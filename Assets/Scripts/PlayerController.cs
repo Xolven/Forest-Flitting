@@ -45,10 +45,10 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float defaultGravityScale = 3f;
     [SerializeField] private float wallStickCooldown = 1f;
-    [SerializeField] private float wallStickMinTime = 0.2f;
+    [SerializeField] private float wallStickMinTime = 0.5f;
     private float wallStickLeaveTime;
     private float wallStickEnterTime;
-    private Vector3 stuckWallDirection;
+    private Vector3 wallStickDirection;
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private void OnDrawGizmos()
     {
@@ -100,49 +100,60 @@ public class PlayerController : MonoBehaviour
             canJump = false;
         }
     }
+    private MovementStates currentMovementState;
+    private enum MovementStates
+    {
+        Moving,
+        Jumping,
+        StuckToWall,
+
+    }
 
     private void FixedUpdate()// WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     {
         CheckCanStickToWall();
+        //Debug.Log(Math.Sign(2f));
+        //Debug.Log(isStuckToWall);
+        //Debug.Log(currentMovementState);
     }
 
     private void UnstickToWall()
     {
-        //return;
-        Debug.Log("unstick check");
-        if (Time.time - wallStickEnterTime < wallStickMinTime)
-        {
-            Debug.Log(Time.time - wallStickEnterTime);
-            Debug.Log(wallStickMinTime);
-            return;
-        }
-        Debug.Log("unstuck from wall");
-        selfTransform.position += stuckWallDirection * -1.15f;
+        Debug.Log("Unstick from wall");
+        isStuckToWall = false;
         _rb.gravityScale = defaultGravityScale;
         _rb.simulated = true;
-        canStickToWall = false;
-        isStuckToWall = false;
         wallStickLeaveTime = Time.time;
     }
     private void StickToWall()
     {
-        //return;
-        Debug.Log("stuck to wall");
-        _rb.gravityScale = 0;
-        _rb.simulated = false;
-        //_currentJumpCount = _jumpCount;
-        isStuckToWall = true;
+        Debug.Log("Sticking to wall");
         wallStickEnterTime = Time.time;
+        currentMovementState = MovementStates.StuckToWall;
+        _rb.linearVelocity = Vector3.zero;
+        _rb.gravityScale = 0f;
+        _rb.simulated = false;
+        isStuckToWall = true;
     }
 
     private void CheckCanStickToWall()
     {
         //return;
+        //Debug.Log("CHECLED AWDSIDWDS");
         if (!canStickToWall && Time.time - wallStickLeaveTime > wallStickCooldown)
         {
             canStickToWall = true;
         }
-        if (isStuckToWall || !canStickToWall)
+        if (isStuckToWall && currentMovementState != MovementStates.StuckToWall && Time.time - wallStickEnterTime > wallStickMinTime)
+        {
+            Debug.Log(Time.time - wallStickEnterTime);
+            Debug.Log("is greater than");
+            Debug.Log(wallStickMinTime);
+            UnstickToWall();
+        }
+
+
+        if (!canStickToWall || IsGrounded() || isStuckToWall || !(Time.time - wallStickLeaveTime > wallStickCooldown))
         {
             return;
         }
@@ -150,45 +161,64 @@ public class PlayerController : MonoBehaviour
         if (IsWallLeft())
         {
             StickToWall();
-            stuckWallDirection = Vector3.left;
+            wallStickDirection = Vector3.left;
         }
         else if (IsWallRight())
         {
             StickToWall();
-            stuckWallDirection = Vector3.left;
+            wallStickDirection = Vector3.right;
         }
 
     }
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     public void Move(InputAction.CallbackContext ctx)
     {
-        if (isStuckToWall)
-        {
-            UnstickToWall();
-        }
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
+        if (IsGrounded() && !isStuckToWall)
+        {
+            currentMovementState = MovementStates.Moving;
+            //Debug.Log("ON DA GROUND");
+        } else if (isStuckToWall && Math.Sign(_movement.x) != Math.Sign(wallStickDirection.x))
+        {
+            //Debug.Log("moiving fddd");
+            currentMovementState = MovementStates.Moving;
+        }
+        //CheckCanStickToWall();
+    }
+
+    private void DoAJump(bool lowerJumpCount = true)
+    {
+        _rb.linearVelocityY = _jumpForce;
+        _anim.SetTrigger("Jump");
+
+        if (lowerJumpCount)
+        {
+            --_currentJumpCount;
+        } 
+
+        selfTransform.position += new Vector3(0, 0.15f, 0); // move a bit up to prevent accidental jump refresh on next update
+
+        currentMovementState = MovementStates.Jumping;
+    }
+
+    private void DoAWallJump()
+    {
+        selfTransform.position += wallStickDirection * -0.2f;
+        DoAJump(false);
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall)) // only jump if action not preformed + you are allowed to jump
+        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump)))
         {
             return;
         }
 
-        if (isStuckToWall)
-        {
-            UnstickToWall();
-        }
-
-        _rb.linearVelocityY = _jumpForce;
-        _anim.SetTrigger("Jump");
-
-        --_currentJumpCount;
-
-        selfTransform.position += new Vector3(0,0.1f,0); // move a bit up to prevent accidental jump refresh on next update
+        if (isStuckToWall) { DoAWallJump(); }
+        else { DoAJump(); }
+        //CheckCanStickToWall();
     }
 
     public void Deactivate()
