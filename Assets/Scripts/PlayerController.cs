@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour
 
     private void UnstickToWall()
     {
-        Debug.Log("Unstick from wall");
+        //Debug.Log("Unstick from wall");
         isStuckToWall = false;
         _rb.gravityScale = defaultGravityScale;
         _rb.simulated = true;
@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
     }
     private void StickToWall()
     {
-        Debug.Log("Sticking to wall");
+        //Debug.Log("Sticking to wall");
         wallStickEnterTime = Time.time;
         currentMovementState = MovementStates.StuckToWall;
         _rb.linearVelocity = Vector3.zero;
@@ -146,9 +146,9 @@ public class PlayerController : MonoBehaviour
         }
         if (isStuckToWall && currentMovementState != MovementStates.StuckToWall && Time.time - wallStickEnterTime > wallStickMinTime)
         {
-            Debug.Log(Time.time - wallStickEnterTime);
-            Debug.Log("is greater than");
-            Debug.Log(wallStickMinTime);
+            //Debug.Log(Time.time - wallStickEnterTime);
+            //Debug.Log("is greater than");
+            //Debug.Log(wallStickMinTime);
             UnstickToWall();
         }
 
@@ -180,7 +180,7 @@ public class PlayerController : MonoBehaviour
         {
             currentMovementState = MovementStates.Moving;
             //Debug.Log("ON DA GROUND");
-        } else if (isStuckToWall && Math.Sign(_movement.x) != Math.Sign(wallStickDirection.x))
+        } else if (isStuckToWall && Math.Sign(_movement.x) != Math.Sign(wallStickDirection.x) && _movement.x != 0)
         {
             //Debug.Log("moiving fddd");
             currentMovementState = MovementStates.Moving;
@@ -205,17 +205,18 @@ public class PlayerController : MonoBehaviour
 
     private void DoAWallJump()
     {
+        Debug.Log("wall jump");
         selfTransform.position += wallStickDirection * -0.2f;
         DoAJump(false);
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump)))
+        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall))
         {
             return;
         }
-
+        Debug.Log("jumpy");
         if (isStuckToWall) { DoAWallJump(); }
         else { DoAJump(); }
         //CheckCanStickToWall();

@@ -268,7 +268,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: wallStickMinTime
-      value: 0.5
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
+      propertyPath: wallStickCooldown
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.x
