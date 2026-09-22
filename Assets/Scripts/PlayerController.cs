@@ -45,8 +45,9 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float defaultGravityScale = 3f;
     [SerializeField] private float wallStickCooldown = 1f;
+    [SerializeField] private float wallStickMinTime = 0.2f;
     private float wallStickLeaveTime;
-
+    private float wallStickEnterTime;
     private Vector3 stuckWallDirection;
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private void OnDrawGizmos()
@@ -103,31 +104,40 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()// WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     {
         CheckCanStickToWall();
-        Debug.Log(_rb.totalForce);
     }
 
     private void UnstickToWall()
     {
-        return;
+        //return;
+        Debug.Log("unstick check");
+        if (Time.time - wallStickEnterTime < wallStickMinTime)
+        {
+            Debug.Log(Time.time - wallStickEnterTime);
+            Debug.Log(wallStickMinTime);
+            return;
+        }
         Debug.Log("unstuck from wall");
-        //selfTransform.position += -stuckWallDirection * 0.15f;
+        selfTransform.position += stuckWallDirection * -1.15f;
         _rb.gravityScale = defaultGravityScale;
+        _rb.simulated = true;
         canStickToWall = false;
         isStuckToWall = false;
         wallStickLeaveTime = Time.time;
     }
     private void StickToWall()
     {
-        return;
+        //return;
         Debug.Log("stuck to wall");
         _rb.gravityScale = 0;
-        _currentJumpCount = _jumpCount;
+        _rb.simulated = false;
+        //_currentJumpCount = _jumpCount;
         isStuckToWall = true;
+        wallStickEnterTime = Time.time;
     }
 
     private void CheckCanStickToWall()
     {
-        return;
+        //return;
         if (!canStickToWall && Time.time - wallStickLeaveTime > wallStickCooldown)
         {
             canStickToWall = true;
