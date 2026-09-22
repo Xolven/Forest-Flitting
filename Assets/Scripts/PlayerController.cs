@@ -213,7 +213,7 @@ public class PlayerController : MonoBehaviour
     public void Jump(InputAction.CallbackContext ctx)
     {
         //if (!ctx.performed) { Debug.Log(!(!IsGrounded() && Time.time - wallStickLeaveTime < 10.1f)); }
-        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && (!isStuckToWall || (!IsGrounded() && Time.time - wallStickLeaveTime > 10.1f))))
+        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall))
         {
             return;
         }
