@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour
             --_currentJumpCount;
         } 
 
-        selfTransform.position += new Vector3(0, 0.15f, 0); // move a bit up to prevent accidental jump refresh on next update
+        selfTransform.position += new Vector3(0, 0.11f, 0); // move a bit up to prevent accidental jump refresh on next update
 
         currentMovementState = MovementStates.Jumping;
     }
@@ -206,18 +206,18 @@ public class PlayerController : MonoBehaviour
     private void DoAWallJump()
     {
         Debug.Log("wall jump");
-        selfTransform.position += wallStickDirection * -0.2f;
+        //selfTransform.position += wallStickDirection * -0.2f;
         DoAJump(false);
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall))
+        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && (!isStuckToWall || (!IsGrounded() && Time.time - wallStickLeaveTime > 10.1))))
         {
             return;
         }
         Debug.Log("jumpy");
-        if (isStuckToWall) { DoAWallJump(); }
+        if (isStuckToWall || (!IsGrounded() && Time.time - wallStickLeaveTime < 10.1)) { DoAWallJump(); }
         else { DoAJump(); }
         //CheckCanStickToWall();
     }
