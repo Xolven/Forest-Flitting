@@ -1,4 +1,5 @@
 using System;
+//using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Unity.VisualScripting;
@@ -28,8 +29,6 @@ public class PlayerController : MonoBehaviour
     private bool canJump = false;
     private float timeWhenLastOnGround = 0f;
 
-    private bool isStuckOnWall = false;
-
     private Vector3 respawnLocation;
 
     private Vector2 _movement;
@@ -45,8 +44,10 @@ public class PlayerController : MonoBehaviour
     private bool canStickToWall = false;
 
     [SerializeField] private float defaultGravityScale = 3f;
-    [SerializeField] private float wallStickRefreshDuration = 1f;
+    [SerializeField] private float wallStickCooldown = 1f;
     private float wallStickLeaveTime;
+
+    private Vector3 stuckWallDirection;
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private void OnDrawGizmos()
     {
@@ -101,32 +102,60 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()// WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     {
-        //CheckWallStick();
+        CheckCanStickToWall();
+        Debug.Log(_rb.totalForce);
     }
 
-    private void LeaveWall()
+    private void UnstickToWall()
     {
+        return;
+        Debug.Log("unstuck from wall");
+        //selfTransform.position += -stuckWallDirection * 0.15f;
         _rb.gravityScale = defaultGravityScale;
         canStickToWall = false;
-        isStuckOnWall = false;
+        isStuckToWall = false;
         wallStickLeaveTime = Time.time;
     }
-    private void StickToWall(int direction)
+    private void StickToWall()
     {
+        return;
+        Debug.Log("stuck to wall");
         _rb.gravityScale = 0;
         _currentJumpCount = _jumpCount;
-        isStuckOnWall = true;
+        isStuckToWall = true;
     }
-    private void CheckWallStick()
+
+    private void CheckCanStickToWall()
     {
-        /* Need to make jumpting have a "wall jump mode"
-         * AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-         * 
-         */
+        return;
+        if (!canStickToWall && Time.time - wallStickLeaveTime > wallStickCooldown)
+        {
+            canStickToWall = true;
+        }
+        if (isStuckToWall || !canStickToWall)
+        {
+            return;
+        }
+
+        if (IsWallLeft())
+        {
+            StickToWall();
+            stuckWallDirection = Vector3.left;
+        }
+        else if (IsWallRight())
+        {
+            StickToWall();
+            stuckWallDirection = Vector3.left;
+        }
+
     }
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     public void Move(InputAction.CallbackContext ctx)
     {
+        if (isStuckToWall)
+        {
+            UnstickToWall();
+        }
         _movement = ctx.ReadValue<Vector2>();
 
         _anim.SetFloat("X", _movement.x);
@@ -134,9 +163,14 @@ public class PlayerController : MonoBehaviour
 
     public void Jump(InputAction.CallbackContext ctx)
     {
-        if (!ctx.performed || _currentJumpCount <= 0 || (!canJump))
+        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall)) // only jump if action not preformed + you are allowed to jump
         {
             return;
+        }
+
+        if (isStuckToWall)
+        {
+            UnstickToWall();
         }
 
         _rb.linearVelocityY = _jumpForce;
@@ -168,7 +202,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PhysicsMaterial2D physicsMat = collision.sharedMaterial;
+        PhysicsMaterial2D physicsMat = collision.sharedMaterial; // handle enter death and checkpoint triggers
         if (!physicsMat)
         {
             Debug.LogWarning("no phmat2d D:");
