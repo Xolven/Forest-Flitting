@@ -1,11 +1,13 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LoadAScene : MonoBehaviour
 {
-    public void LoadScene(string sceneName)
+    [SerializeField] public string targetSceneName;
+    public void LoadScene()
     {
         //Debug.Log("loading scene: " + sceneName);
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(targetSceneName);
     }
 }
