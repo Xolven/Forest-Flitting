@@ -49,6 +49,8 @@ public class PlayerController : MonoBehaviour
     private float wallStickLeaveTime;
     private float wallStickEnterTime;
     private Vector3 wallStickDirection;
+
+    private bool hasPreformedWallJump = false;
     // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     private void OnDrawGizmos()
     {
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
         CheckCanStickToWall();
         //Debug.Log(Math.Sign(2f));
         //Debug.Log(isStuckToWall);
-        //Debug.Log(currentMovementState);
+        //Debug.Log(IsGrounded().ToSafeString() + " is grounded");
     }
 
     private void UnstickToWall()
@@ -134,6 +136,7 @@ public class PlayerController : MonoBehaviour
         _rb.gravityScale = 0f;
         _rb.simulated = false;
         isStuckToWall = true;
+        hasPreformedWallJump = false;
     }
 
     private void CheckCanStickToWall()
@@ -207,18 +210,25 @@ public class PlayerController : MonoBehaviour
     {
         Debug.Log("wall jump");
         //selfTransform.position += wallStickDirection * -0.2f;
+        hasPreformedWallJump = true;
         DoAJump(false);
     }
 
     public void Jump(InputAction.CallbackContext ctx)
     {
         //if (!ctx.performed) { Debug.Log(!(!IsGrounded() && Time.time - wallStickLeaveTime < 10.1f)); }
-        if (!ctx.performed || ((_currentJumpCount <= 0 || !canJump) && !isStuckToWall))
+        if (!ctx.performed || !((_currentJumpCount >= 0 && canJump) || (isStuckToWall || (Time.time - wallStickLeaveTime < 2.1f && !hasPreformedWallJump))))
         {
+            if (ctx.performed)
+            {
+                Debug.Log("Returned");
+            }
             return;
+            
         }
+        //Debug.Log((Time.time - wallStickLeaveTime > 10.1f));
         Debug.Log("jumpy");
-        if (isStuckToWall) { DoAWallJump(); } // || (!IsGrounded() && Time.time - wallStickLeaveTime < 10.1)
+        if (isStuckToWall || (Time.time - wallStickLeaveTime < 2.1f && !hasPreformedWallJump)) { DoAWallJump(); } // || (!IsGrounded() && Time.time - wallStickLeaveTime < 10.1)
         else { DoAJump(); }
         //CheckCanStickToWall();
     }
