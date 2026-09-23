@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PhysicsMaterial2D checkpointPhyMat;
     [SerializeField] private PhysicsMaterial2D deathPhyMat;
 
+
+    [SerializeField] public AudioManager audioManager;
+
     private SpriteRenderer _rndr;
     private Rigidbody2D _rb;
     private Animator _anim;
@@ -201,6 +204,8 @@ public class PlayerController : MonoBehaviour
         selfTransform.position += new Vector3(0, 0.11f, 0); // move a bit up to prevent accidental jump refresh on next update
 
         currentMovementState = MovementStates.Jumping;
+
+        audioManager.PlaySFX(audioManager.jumpSFX);
     }
 
     private void DoAWallJump()
@@ -236,6 +241,7 @@ public class PlayerController : MonoBehaviour
         _rb.simulated = false;
 
         selfTransform.position = respawnLocation;
+        //audioManager.PlaySFX(audioManager.deathSFX);
         Activate();
     }
 
