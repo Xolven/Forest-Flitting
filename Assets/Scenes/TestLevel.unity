@@ -266,14 +266,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
-      propertyPath: wallStickMinTime
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: -7550907509218188280, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
-      propertyPath: wallStickCooldown
-      value: 1.2
-      objectReference: {fileID: 0}
     - target: {fileID: 4203213710898053551, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.726
@@ -318,14 +310,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 8153234610657594845, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8852145562237928448, guid: f92580c55e9f9504a9258b0d751ebe4e, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 6200000, guid: 3ea241a28390bbe4e8d52c985f7238b9, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

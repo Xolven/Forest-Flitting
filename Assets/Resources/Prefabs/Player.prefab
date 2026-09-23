@@ -286,7 +286,7 @@ BoxCollider2D:
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 3ea241a28390bbe4e8d52c985f7238b9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -337,10 +337,13 @@ MonoBehaviour:
   _movementSpeed: 10
   _jumpForce: 15
   _jumpCount: 1
+  maxCoyoteTime: 0.1
+  maxWallJumpCoyoteTime: 0.1
+  defaultGravityScale: 3
+  wallStickCooldown: 1.2
+  wallStickMinTime: 0.05
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  maxCoyoteTime: 0.1
   checkpointPhyMat: {fileID: 6200000, guid: 5e5c178f67fac944cb77c529d190ea09, type: 2}
   deathPhyMat: {fileID: 6200000, guid: b5d694951081cd141a6c444039a8762a, type: 2}
-  respawnLocation: {x: 0, y: 0, z: 0}
