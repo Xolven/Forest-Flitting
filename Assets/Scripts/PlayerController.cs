@@ -12,15 +12,21 @@ using UnityEngine.UIElements;
 [RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("General Movement")]
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _jumpForce;
     [SerializeField] private uint _jumpCount;
+    
+    [Header("Coyote Time")]
     [SerializeField] private float maxCoyoteTime = 0.1f;
     [SerializeField] private float maxWallJumpCoyoteTime = 0.1f;
+
+    [Header("Wall Stick")]
     [SerializeField] private float defaultGravityScale = 3f;
     [SerializeField] private float wallStickCooldown = 1.2f;
     [SerializeField] private float wallStickMinTime = 0.05f;
 
+    [Header("Misc")]
     [SerializeField] private LayerMask _groundLayer;
 
     [SerializeField] private PhysicsMaterial2D checkpointPhyMat;
@@ -44,7 +50,7 @@ public class PlayerController : MonoBehaviour
     private bool canStickToWall = false;
     private float wallStickLeaveTime;
     private float wallStickEnterTime;
-    private Vector3 wallStickDirection;
+    private Vector3 wallStickDirection = Vector3.zero;
 
     private bool IsGrounded() => Physics2D.BoxCast(transform.position - Vector3.up, new Vector2(0.9f, 0.1f), 0, Vector2.zero, 100, _groundLayer);
     private bool IsWallLeft() => Physics2D.BoxCast(transform.position - new Vector3(0.8f, 0.4f, 0), new Vector2(0.1f, 0.9f), 0, Vector2.zero, 100, _groundLayer);
@@ -98,6 +104,7 @@ public class PlayerController : MonoBehaviour
         CheckCanStickToWall();
     }
 
+    // Wall Sticking Scripts
     private void UnstickToWall()
     {
         isStuckToWall = false;
@@ -127,8 +134,21 @@ public class PlayerController : MonoBehaviour
             UnstickToWall();
         }
 
+        bool isOppositeWall = false;
+        if (!isStuckToWall && wallStickDirection != Vector3.zero)
+        {
+            if ((IsWallLeft() && wallStickDirection == Vector3.right) || (IsWallRight() && wallStickDirection == Vector3.left))
+            {
+                isOppositeWall = true;
+            }
+            else
+            {
+                isOppositeWall = false;
+            }
+        }
 
-        if (!canStickToWall || IsGrounded() || isStuckToWall || !(Time.time - wallStickLeaveTime > wallStickCooldown))
+
+        if (!canStickToWall || IsGrounded() || isStuckToWall || !(Time.time - wallStickLeaveTime > wallStickCooldown || isOppositeWall))
         {
             return;
         }
@@ -145,7 +165,8 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-    // WALL STICK STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+    
+    // Movement Script
     public void Move(InputAction.CallbackContext ctx)
     {
         _movement = ctx.ReadValue<Vector2>();
@@ -161,6 +182,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Jumping Scripts
     private void DoAJump(bool lowerJumpCount = true)
     {
         _rb.linearVelocityY = _jumpForce;
@@ -200,6 +222,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // Death + Respawn
     public void Deactivate()
     {
         enabled = false;
