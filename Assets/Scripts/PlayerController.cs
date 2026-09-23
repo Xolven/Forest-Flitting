@@ -111,6 +111,8 @@ public class PlayerController : MonoBehaviour
         _rb.gravityScale = defaultGravityScale;
         _rb.simulated = true;
         wallStickLeaveTime = Time.time;
+
+        _anim.SetTrigger("LeaveWall");
     }
     private void StickToWall()
     {
@@ -121,6 +123,9 @@ public class PlayerController : MonoBehaviour
         _rb.simulated = false;
         isStuckToWall = true;
         hasPreformedWallJump = false;
+
+        _anim.SetFloat("WallDir",wallStickDirection.x);
+        _anim.SetTrigger("StickToWall");
     }
 
     private void CheckCanStickToWall()
@@ -155,13 +160,13 @@ public class PlayerController : MonoBehaviour
 
         if (IsWallLeft())
         {
-            StickToWall();
             wallStickDirection = Vector3.left;
+            StickToWall();
         }
         else if (IsWallRight())
         {
-            StickToWall();
             wallStickDirection = Vector3.right;
+            StickToWall();
         }
 
     }
