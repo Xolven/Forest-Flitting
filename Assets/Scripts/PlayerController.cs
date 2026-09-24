@@ -5,6 +5,7 @@ using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 [RequireComponent(typeof(SpriteRenderer))]
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private PhysicsMaterial2D checkpointPhyMat;
     [SerializeField] private PhysicsMaterial2D deathPhyMat;
+    [SerializeField] private PhysicsMaterial2D winGameMat;
 
 
     [SerializeField] public AudioManager audioManager;
@@ -268,6 +270,9 @@ public class PlayerController : MonoBehaviour
         } else if (physicsMat == checkpointPhyMat)
         {
             respawnLocation = collision.GetComponent<Transform>().position;
+        } else if (physicsMat == winGameMat)
+        {
+            SceneManager.LoadScene("WinScreen");
         }
     }
 }

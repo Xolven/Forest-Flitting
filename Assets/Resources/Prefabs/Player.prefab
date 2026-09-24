@@ -347,3 +347,5 @@ MonoBehaviour:
     m_Bits: 8
   checkpointPhyMat: {fileID: 6200000, guid: 5e5c178f67fac944cb77c529d190ea09, type: 2}
   deathPhyMat: {fileID: 6200000, guid: b5d694951081cd141a6c444039a8762a, type: 2}
+  winGameMat: {fileID: 6200000, guid: 33ac1c5a79d569f41af402a874097f4a, type: 2}
+  audioManager: {fileID: 0}
