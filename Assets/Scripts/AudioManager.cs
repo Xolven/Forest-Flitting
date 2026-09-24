@@ -11,6 +11,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        if (BGMusic == null)
+            return;
         musicSource.clip = BGMusic;
         musicSource.Play();
     }
