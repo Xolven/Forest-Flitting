@@ -241,7 +241,7 @@ public class PlayerController : MonoBehaviour
         _rb.simulated = false;
 
         selfTransform.position = respawnLocation;
-        //audioManager.PlaySFX(audioManager.deathSFX);
+        audioManager.PlaySFX(audioManager.deathSFX);
         Activate();
     }
 
